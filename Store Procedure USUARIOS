@@ -1,0 +1,29 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `INSERT_USUARIO`(
+    in _id INT,
+    in _nombre Text,
+    in _usuario text,
+    in _pasword INT,
+    in _perfil text,
+    in _foto text,
+    in _estado text
+)
+BEGIN
+    DECLARE existe_usu INT;
+    DECLARE id INT;
+    
+    SET existe_usu = (select count(*) from usuarios where usuario = _usuario);
+    IF existe_usu = 0 THEN
+    INSERT INTO usuarios (id,nombre,usuario,pasword,perfil,foto,estado)
+    VALUES (_id,_nombre,_usuario,_pasword,_perfil,_foto,_estado);
+    SET id = LAST_INSERT_ID();
+    
+    ELSE
+    	SET id = 0;
+     
+        
+    END IF;
+       SELECT id;
+    
+ END$$
+DELIMITER ;
