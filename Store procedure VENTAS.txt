@@ -1,0 +1,23 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `INSERT_VENTAS`(IN `_codigo` INT, IN `_id_cliente` INT, IN `_id_vendedor` INT, IN `_productos` TEXT, IN `_impuesto` FLOAT, IN `_neto` FLOAT, IN `_total` FLOAT, IN `_metodo_pago` TEXT)
+BEGIN
+   DECLARE existe_venta INT;
+    DECLARE id INT;
+
+    SET existe_venta=(select count(*) from ventas where codigo = _codigo);
+    IF existe_venta=0 THEN
+
+    INSERT INTO ventas (codigo,id_cliente,id_vendedor,productos,impuesto,neto,total,metodo_pago)
+               VALUES (_codigo,_id_cliente,_id_vendedor,_productos,_impuesto,_neto,_total,_metodo_pago);
+    
+       SET id = LAST_INSERT_ID();
+    
+    ELSE
+    	SET id = 0;
+     
+        
+    END IF;
+       SELECT id;
+
+END$$
+DELIMITER ;
